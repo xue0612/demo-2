@@ -32,4 +32,6 @@ public interface XdUserMapper {
     int updateBy(String password1,String phone);
 
     int updateByPrimaryKey(XdUser record);
+    
+    int updateForOpeImg(XdUser record);
 }

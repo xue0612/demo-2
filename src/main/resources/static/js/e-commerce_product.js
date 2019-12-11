@@ -1,9 +1,32 @@
 $(function(){
+	var name = sessionStorage.getItem("userName");
+	$(".username").text(name);
+})
+
+$(function() {
+	$.ajax({
+		// 请求类型
+		type : "get",
+		// 请求路径
+		url : "e_numshow",
+		// 请求参数
+		// 返回数据类型
+		// 请求成功后调用函数
+		success : function(data) {
+			$(".shopnum").text(data.num);
+		},
+		error : function(data) {
+			console.log("失败后返回数据", data);
+		}
+	})
+})
+
+$(function(){
 	$.ajax({
 		// 请求类型
 		type : "post",
 		// 请求路径
-		url : "/shoping",
+		url : "shoping",
 		// 请求参数
 		// 返回数据类型
 		// 请求成功后调用函数
@@ -39,7 +62,7 @@ $(".content-nav li").on("click", function(event){
 
 $(".search-btn").on("click", function(event){
     var productName=$(".search input").val();
-    location.href="fenyelike?productName="+productName;
+    location.href="./e_product?productName="+productName;
 })
 
 function inCar(id){
@@ -49,7 +72,7 @@ function inCar(id){
 		// 请求类型
 		type : "post",
 		// 请求路径
-		url : "/shop",
+		url : "shop",
 		// 请求参数
 		data : {
 			id : id,
@@ -60,7 +83,7 @@ function inCar(id){
 		success : function(data) {
 			console.log("成功后返回数据", data);
 			if (data.code == 1) {
-				location.href = "/e_shoppingcar"
+				location.href = "./e_shoppingcar"
 			} else {
 				alert("信息输入错误!");
 				location.href = "e-commerce_login.html"
@@ -85,9 +108,9 @@ $(document).ready(function(){
 		if(cpage<=10){
 			for(var i=1;i<=cpage;i++){
 				if(i==nowpage){
-					strhtml+='<a href=/fenyelike?pageStart='+psize*(i-1)+'&productName='+productName+' style="background-color:#aaaaaa;font-weight:700">'+i+'</a>';
+					strhtml+='<a href=./e_product?pageStart='+psize*(i-1)+'&productName='+productName+' style="background-color:#aaaaaa;font-weight:700">'+i+'</a>';
 				}else{
-					strhtml+='<span> <a href=/fenyelike?pageStart='+psize*(i-1)+'&productName='+productName+'>'+i+'</a></span>';
+					strhtml+='<span> <a href=./e_product?pageStart='+psize*(i-1)+'&productName='+productName+'>'+i+'</a></span>';
 				}
 			}
 		}
@@ -98,10 +121,10 @@ $(document).ready(function(){
 				for(var i=1;i<=10;i++){			
 				
 					if(i==nowpage){
-						strhtml+='<a href=/fenyelike?pageStart='+psize*(i-1)+'&productName='+productName+' style="background-color:#aaaaaa;font-weight:700">'+i+'</a>';
+						strhtml+='<a href=./e_product?pageStart='+psize*(i-1)+'&productName='+productName+' style="background-color:#aaaaaa;font-weight:700">'+i+'</a>';
 						//strhtml+='<a href=/userAll?pageStart='+psize*(i-1)+' style="background-color:#aaaaaa"><div class="nowpage">'+i+'</div></a>';
 					}else{
-						strhtml+='<span> <a href=/fenyelike?pageStart='+psize*(i-1)+'&productName='+productName+'>'+i+'</a></span>';
+						strhtml+='<span> <a href=./e_product?pageStart='+psize*(i-1)+'&productName='+productName+'>'+i+'</a></span>';
 					}
 				}
 			}
@@ -110,10 +133,10 @@ $(document).ready(function(){
 				for(var i=nowpage-5;i<=nowpage+4;i++){//6--15			
 			
 					if(i==nowpage){
-						strhtml+='<a href=/fenyelike?pageStart='+psize*(i-1)+'&productName='+productName+' style="background-color:#aaaaaa;font-weight:700">'+i+'</a>';
+						strhtml+='<a href=./e_product?pageStart='+psize*(i-1)+'&productName='+productName+' style="background-color:#aaaaaa;font-weight:700">'+i+'</a>';
 						//strhtml+='<a href=/userAll?pageStart='+psize*(i-1)+' style="background-color:#aaaaaa"><div class="nowpage">'+i+'</div></a>';
 					}else{
-						strhtml+='<span> <a href=/fenyelike?pageStart='+psize*(i-1)+'&productName='+productName+'>'+i+'</a></span>';
+						strhtml+='<span> <a href=./e_product?pageStart='+psize*(i-1)+'&productName='+productName+'>'+i+'</a></span>';
 					}
 				
 				}
@@ -123,10 +146,10 @@ $(document).ready(function(){
 				for(var i=cpage-9;i<=cpage;i++){
 				
 					if(i==nowpage){
-						strhtml+='<a href=/fenyelike?pageStart='+psize*(i-1)+'&productName='+productName+' style="background-color:#aaaaaa;font-weight:700">'+i+'</a>';
+						strhtml+='<a href=./e_product?pageStart='+psize*(i-1)+'&productName='+productName+' style="background-color:#aaaaaa;font-weight:700">'+i+'</a>';
 						//strhtml+='<a href=/userAll?pageStart='+psize*(i-1)+' style="background-color:#aaaaaa"><div class="nowpage">'+i+'</div></a>';
 					}else{
-						strhtml+='<span> <a href=/fenyelike?pageStart='+psize*(i-1)+'&productName='+productName+'>'+i+'</a></span>';
+						strhtml+='<span> <a href=./e_product?pageStart='+psize*(i-1)+'&productName='+productName+'>'+i+'</a></span>';
 					}
 				}
 			}

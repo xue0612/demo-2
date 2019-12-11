@@ -17,16 +17,16 @@
 	
     <div class="headder-top">
         <div class="width1200 headder-top-content">
-            <div><span>{用户名}</span>欢饮来到信达！<span class="user-quit">[退出]</span></div>
+            <div><span class="username"></span> 欢迎来到信达！<a href="e-commerce_login.html">[退出]</a></div>
             <ul>
-                <li><a href="e_shoppingcar"><i class="fa fa-shopping-cart fa-lg"></i>
-                        购物车<span>1</span>件</a></li>
+                <li><a href="./e_shoppingcar"><i class="fa fa-shopping-cart fa-lg"></i>
+                        购物车<span class="shopnum">1</span>件</a></li>
                 <li>
-                    <a href="e-commerce_order.html">
+                    <a href="./e_order">
                         <i class="fa fa-file-text-o fa-lg"></i> 我的订单
                     </a>
                 </li>
-                <li>服务商入口</li>
+                <li><a href="./ser_product">服务商入口</a></li>
             </ul>
         </div>
     </div>
@@ -49,18 +49,13 @@
         <img class="tel" src="./images/xinda-tel.png" alt="">
     </div>
     <ul class="banner width1200">
-        <li><a href="/fenyelike" class="border-b">全部产品</a></li>
-        <li><a href="#">财税服务</a></li>
-        <li><a href="#">公司工商</a></li>
-        <li><a href="#">人事外包</a></li>
-        <li><a href="#">加盟我们</a></li>
-        <li><a href="#">店铺</a></li>
+        <li><a href="./e_product" class="border-b">全部产品</a></li>
     </ul>
     <div class="line-aqua"></div>
     <div class="content width1200">
-        <p class="product_num font-aqua">全部商品（1）</p>
+        <li>全部商品（<span class="shopnum "></span>）件</li>
         <hr color="#ededed" size="1">
-        <p class="shop">店铺：云智汇咨询服务有限公司</p>
+        <p class="shop">运营商：云智汇咨询服务有限公司</p>
         <ul class="product_list_title">
             <li>图片</li>
             <li>服务商品</li>
@@ -69,29 +64,30 @@
             <li>金额</li>
             <li>操作</li>
         </ul>
-  <ul class="merchandise"  th:each="shopping:${xdShoppingList}">
+        <hr color="#ededed" size="1">
+  		<ul class="merchandise"  th:each="shopping:${xdShoppingList}">
 			 <li>
-			 	<img src="" alt="图片">
-	            <!-- <img th:src="@{'/headImg?id='+${shopping.id}}" alt="图片" />  -->
+			 	<img th:src="@{'./headImg?id='+${shopping.proId}}" alt="图片" /> 
+	             <!--<img th:src="@{'/headImg?id='+${shopping.id}}" alt="图片" />   -->
 		     </li>  
-           	 <li th:text="${shopping.proId}"></li>
-           	 <li th:text="${shopping.count}"></li>
+           	 <li th:text="${shopping.productName}"></li>
+           	 <li th:text="${shopping.productPrice}"></li>
            	 <li id="tab">
-                <input class="min" name="" type="button" value="-" />
-                <input class="text_box"  th:value="${shopping.count}"/>
-                <input class="add" name="" type="button" value="+" />
+                <input th:data-id="${shopping.id}" class="min" th:onclick="reducenum(this.getAttribute('data-id'))" type="button" value="-" />
+                <input th:data-id="${shopping.id}" class="text_box"  th:value="${shopping.count}" th:onblur="changenum(this.getAttribute('data-id'))"/>
+                <input th:data-id="${shopping.id}" class="add" th:onclick="addnum(this.getAttribute('data-id'))" type="button" value="+" />
             </li>
-            	<li  th:text="${shopping.count}"></li>
+            	<li th:text="${shopping.productPrice*shopping.count}" ></li>
             <li>
             	<button th:data-id="${shopping.id}" th:onclick="deletes(this.getAttribute('data-id'))" type="button">删除</button>
             </li>
         </ul>
-         
+       <hr />
          <ul class="price" > 
-        	<li><span >合计金额：<label id="total"></label></span></li> 
+        	<li>合计金额：<span th:text="${allPrice}"></span></li> 
           
             <li>
-                <a href="/fenyelike">继续购物</a>
+                <a href="./e_product">继续购物</a>
                 <a href="e-commerce_settlement.html">去结算</a>
             </li>
         </ul> 
@@ -109,16 +105,16 @@
 	
 		<ul class="pagination">
 		
-			<li><a th:href="@{'/e_shoppingcar?pageStart=' + 0+'&id='+${id}}">首页</a></li>
+			<li><a th:href="@{'./e_shoppingcar?pageStart=' + 0+'&id='+${id}}">首页</a></li>
 			<li><span th:if="${pagePre} ge '0'" class="main-pagination-page"><a
-					th:href="@{'/e_shoppingcar?pageStart=' + ${pagePre}+'&id='+${id}}">«</a></span></li>
+					th:href="@{'./e_shoppingcar?pageStart=' + ${pagePre}+'&id='+${id}}">«</a></span></li>
 			<li><div id="mydiv"></div></li>
 			<li><span th:if="${pageNext} lt ${count}" ><a
-					th:href="@{'/e_shoppingcar?pageStart=' + ${pageNext}+'&id='+${id}}"  >»</a></span></li>
+					th:href="@{'./e_shoppingcar?pageStart=' + ${pageNext}+'&id='+${id}}"  >»</a></span></li>
 			<li><span th:if="${modPage} eq  '0'"  ><a
-					th:href="@{'/e_shoppingcar?pageStart=' + ${lastPage}+'&id='+${id}}">末页</a></span></li>
+					th:href="@{'./e_shoppingcar?pageStart=' + ${lastPage}+'&id='+${id}}">末页</a></span></li>
 			<li><span th:unless="${modPage} eq  '0'"  ><a
-					th:href="@{'/e_shoppingcar?pageStart=' + ${pageLast}+'&id='+${id}}">末页</a></span></li>
+					th:href="@{'./e_shoppingcar?pageStart=' + ${pageLast}+'&id='+${id}}">末页</a></span></li>
 		</ul>
 	</div>
     <script src="./js/e-commerce_shoping-car.js"></script>

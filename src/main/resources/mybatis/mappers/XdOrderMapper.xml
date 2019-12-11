@@ -75,6 +75,46 @@
     id, order_number, bought_user, order_info, order_price, order_no, ts, pay, status, 
     appraise
   </sql>
+  
+  <select id="getCount" parameterType="map" resultType="java.lang.Integer">
+    select count(*) from xd_order  
+    <if test="orderNumber!=null and orderNumber!=''">
+    	where order_number like CONCAT('%','${orderNumber}','%')  
+    </if>     
+  </select>
+  
+  <select id="countByExample" parameterType="com.dt.xd.xdOrder.XdOrderExample" resultType="java.lang.Long">
+    select count(*) from xd_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <select  id="selectByNumber" parameterType="com.dt.xd.xdOrder.XdOrderExample" resultMap="BaseResultMap">
+  	select 
+  		<if test="distinct">
+  		     distinct
+  		</if>
+  		<include refid="Base_Column_List"></include>
+  		 from xd_order 
+  		<if test="_parameter!=null">
+  			<include refid="Example_Where_Clause"></include>
+  		</if>
+  		<if test="orderNumber!=null  and  orderNumber!=''">
+  			 where order_number like '%${orderNumber}%'
+  		</if>
+  		<if test="pageStart>=0">
+  		  limit ${pageStart},${pageSize}
+  		</if> 
+  		<if test="orderByClause!=null">
+  			order by ${orderByClause}
+  		</if>
+  </select>
+  
+  <select  id="selectByDate" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select * from xd_order where ts between #{startdate} and #{enddate}
+  </select>
+  
   <select id="selectByExample" parameterType="com.dt.xd.xdOrder.XdOrderExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -182,12 +222,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dt.xd.xdOrder.XdOrderExample" resultType="java.lang.Long">
-    select count(*) from xd_order
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
+  
   <update id="updateByExampleSelective" parameterType="map">
     update xd_order
     <set>
@@ -226,6 +261,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <!-- 
   <update id="updateByExample" parameterType="map">
     update xd_order
     set id = #{record.id,jdbcType=VARCHAR},
@@ -241,6 +277,13 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+   -->
+   <update id="updateByExample" parameterType="com.dt.xd.xdOrder.XdOrder">
+    update xd_order
+    set 
+      appraise = #{record.appraise,jdbcType=VARCHAR}
+  
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.dt.xd.xdOrder.XdOrder">
     update xd_order

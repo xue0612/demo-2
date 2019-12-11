@@ -18,8 +18,18 @@ public class XdUser {
     private String status;
 
     private Date ts;
+    
+    private byte[] img;
 
-    public String getId() {
+    public byte[] getImg() {
+		return img;
+	}
+
+	public void setImg(byte[] img) {
+		this.img = img;
+	}
+
+	public String getId() {
         return id;
     }
 

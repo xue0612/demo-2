@@ -207,6 +207,11 @@ div.nowpage {
 div.center {
 	text-align: center;
 }
+.merchandise img {
+    width: 70px;
+    height: 70px;
+    margin-left: 30px;
+}
 
 
 

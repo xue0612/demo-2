@@ -22,61 +22,40 @@ public class XdUserServiceImpl implements XdUserService{
 	XdProductMapper xdProductMapper;
 	
 	@Override
-	public List<XdUser> ope_login(String phone) {
+	//运营商的登录，调用匿名内部类，调用查询
+	public List<XdUser> login(String phone) {
 		XdUserExample xdUserExample=new XdUserExample();
 		XdUserExample.Criteria criteria=xdUserExample.createCriteria();
 		criteria.andPhoneEqualTo(phone);
 		return xdUserMapper.selectByExample(xdUserExample);
 	}
 	@Override
-	public int ope_repassword(XdUser user) {
+	//运营商的修改密码，调用.xml文件里的updateBy，修改了.xml文件
+	public int repassword(XdUser user) {
 		XdUserExample xdUserExample=new XdUserExample();
 		XdUserExample.Criteria criteria=xdUserExample.createCriteria();
 		return xdUserMapper.updateBy(user.getPassword(), user.getPhone());
 	}
 	@Override
+	//运营商的的注册
 	public int insert(XdUser record) {
 		return xdUserMapper.insert(record);
 	}
+	
 	@Override
-	public List<XdProduct> selectByExample(int pageStart, int pageSize, String productName) {
-		XdProductExample xdProductExample=new XdProductExample();
-		xdProductExample.setDistinct(true);
-		xdProductExample.setPageSize(pageSize);
-		xdProductExample.setPageStart(pageStart);
-		return xdProductMapper.selectByExample(xdProductExample,productName);
-	}
-	@Override
-	public long getCount() {
-		XdProductExample xdProductExample=new XdProductExample();
-		return xdProductMapper.countByExample();
-	}
-	@Override
-	public int getCount(String productName) {
-		return xdProductMapper.getCount(productName);
-	}
-	@Override
-	public List<XdProduct> selectByName(int pageStart, int pageSize, String productName) {
-		XdProductExample xdProductExample=new XdProductExample();
-		xdProductExample.setProductName(productName);
-		xdProductExample.setPageSize(pageSize);
-		xdProductExample.setPageStart(pageStart);
-		return xdProductMapper.selectByName(xdProductExample);
-	}
-	@Override
-	public int updateImg(XdProduct xdProduct) {
-		return xdProductMapper.updateByPrimaryKey(xdProduct);
-	}
-	@Override
-	public XdProduct selectByPrimaryKey(Integer id) {
-		return xdProductMapper.selectByPrimaryKey(id);
-	}
-	@Override
-	public List<XdUser> selectByPrimaryKey(String id) {
+	//运营商的按照主键id查询
+	public List<XdUser> selectBy(String id) {
 		XdUserExample xdUserExample=new XdUserExample();
 		XdUserExample.Criteria criteria=xdUserExample.createCriteria();
 		criteria.andIdEqualTo(id);
 		return xdUserMapper.selectByExample(xdUserExample);
 	}
-	
+	@Override
+	public int updateForOpeImg(XdUser user) {
+		return xdUserMapper.updateForOpeImg(user);
+	}
+	@Override
+	public XdUser selectByPrimaryKey(String id) {
+		return xdUserMapper.selectByPrimaryKey(id);
+	}
 }

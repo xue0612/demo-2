@@ -25,7 +25,39 @@ public class XdBoughtUser {
 
     private String status;
 
-    public String getId() {
+    private String password;
+    
+    private String cmbProvince;
+
+    private String cmbCity;
+    
+    private String cmbArea;
+
+    public String getCmbProvince() {
+		return cmbProvince;
+	}
+
+	public void setCmbProvince(String cmbProvince) {
+		this.cmbProvince = cmbProvince;
+	}
+
+	public String getCmbCity() {
+		return cmbCity;
+	}
+
+	public void setCmbCity(String cmbCity) {
+		this.cmbCity = cmbCity;
+	}
+
+	public String getCmbArea() {
+		return cmbArea;
+	}
+
+	public void setCmbArea(String cmbArea) {
+		this.cmbArea = cmbArea;
+	}
+
+	public String getId() {
         return id;
     }
 
@@ -111,5 +143,13 @@ public class XdBoughtUser {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 }

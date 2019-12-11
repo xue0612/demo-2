@@ -18,6 +18,9 @@
     <result column="wechat" jdbcType="VARCHAR" property="wechat" />
     <result column="custom_phone" jdbcType="VARCHAR" property="customPhone" />
     <result column="license" jdbcType="VARCHAR" property="license" />
+    <result column="cmbProvince" jdbcType="VARCHAR" property="cmbProvince" />
+    <result column="cmbCity" jdbcType="VARCHAR" property="cmbCity" />
+    <result column="cmbArea" jdbcType="VARCHAR" property="cmbArea" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -79,8 +82,37 @@
   </sql>
   <sql id="Base_Column_List">
     id, service_head, service_name, area, service_phone, service_password, introduction, 
-    status, email, ts, synopsis, worktime, qq, wechat, custom_phone, license
+    status, email, ts, synopsis, worktime, qq, wechat, custom_phone, license,img,cmbProvince,cmbCity,cmbArea,lic
   </sql>
+  
+  <select id="getCount" parameterType="map" resultType="java.lang.Integer">
+    select count(*) from xd_service_user  
+    <if test="serviceName!=null and serviceName!=''">
+    	where service_name like CONCAT('%','${serviceName}','%')  
+    </if>     
+  </select>
+  
+  <select  id="selectByName" parameterType="com.dt.xd.xdServiceUser.XdServiceUserExample" resultMap="BaseResultMap">
+  	select 
+  		<if test="distinct">
+  		     distinct
+  		</if>
+  		<include refid="Base_Column_List"></include>
+  		 from xd_service_user 
+  		<if test="_parameter!=null">
+  			<include refid="Example_Where_Clause"></include>
+  		</if>
+  		<if test="serviceName!=null  and  serviceName!=''">
+  			 where service_name like '%${serviceName}%'
+  		</if>
+  		<if test="pageStart>=0">
+  		  limit ${pageStart},${pageSize}
+  		</if> 
+  		<if test="orderByClause!=null">
+  			order by ${orderByClause}
+  		</if>
+  </select>
+  
   <select id="selectByExample" parameterType="com.dt.xd.xdServiceUser.XdServiceUserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -95,6 +127,33 @@
       order by ${orderByClause}
     </if>
   </select>
+  
+  <select id="select" parameterType="com.dt.xd.xdServiceUser.XdServiceUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from xd_service_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  
+  <update id="updateBy" parameterType="java.lang.String">
+    update xd_service_user
+    set 
+     
+      service_password = #{servicePassword1} where service_phone = #{servicePhone}
+     
+    
+  </update>
+  
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -117,13 +176,13 @@
       introduction, status, email, 
       ts, synopsis, worktime, 
       qq, wechat, custom_phone, 
-      license)
+      license,cmbProvince,cmbCity,cmbArea)
     values (#{id,jdbcType=VARCHAR}, #{serviceHead,jdbcType=VARCHAR}, #{serviceName,jdbcType=VARCHAR}, 
       #{area,jdbcType=VARCHAR}, #{servicePhone,jdbcType=VARCHAR}, #{servicePassword,jdbcType=VARCHAR}, 
       #{introduction,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{ts,jdbcType=TIMESTAMP}, #{synopsis,jdbcType=VARCHAR}, #{worktime,jdbcType=VARCHAR}, 
       #{qq,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, #{customPhone,jdbcType=VARCHAR}, 
-      #{license,jdbcType=VARCHAR})
+      #{license,jdbcType=VARCHAR}, #{cmbProvince,jdbcType=VARCHAR},#{cmbCity,jdbcType=VARCHAR},#{cmbArea,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dt.xd.xdServiceUser.XdServiceUser">
     insert into xd_service_user
@@ -228,6 +287,9 @@
       </if>
     </trim>
   </insert>
+  <select id="selectByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from xd_service_user where service_phone = ${phone}
+  </select>
   <select id="countByExample" parameterType="com.dt.xd.xdServiceUser.XdServiceUserExample" resultType="java.lang.Long">
     select count(*) from xd_service_user
     <if test="_parameter != null">
@@ -284,6 +346,15 @@
       </if>
       <if test="record.license != null">
         license = #{record.license,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cmbProvince !=null">
+        cmbProvince=#{record.cmbProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cmbCity !=null">
+        cmbCity=#{record.cmbCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cmbArea !=null">
+        cmbArea=#{record.cmbArea,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -380,6 +451,41 @@
       wechat = #{wechat,jdbcType=VARCHAR},
       custom_phone = #{customPhone,jdbcType=VARCHAR},
       license = #{license,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateForSetting" parameterType="com.dt.xd.xdServiceUser.XdServiceUser">
+    update xd_service_user
+    set service_name = #{serviceName,jdbcType=VARCHAR},
+    	area = #{area,jdbcType=VARCHAR},
+    	wechat = #{wechat,jdbcType=VARCHAR},
+    	qq = #{qq,jdbcType=VARCHAR},
+    	email = #{email,jdbcType=VARCHAR}
+    where service_phone = #{servicePhone,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateForImg" parameterType="com.dt.xd.xdServiceUser.XdServiceUser">
+    update xd_service_user
+    set img = #{img,jdbcType=LONGVARBINARY}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateForStore" parameterType="com.dt.xd.xdServiceUser.XdServiceUser">
+    update xd_service_user
+    set lic = #{lic,jdbcType=LONGVARBINARY}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateStore" parameterType="com.dt.xd.xdServiceUser.XdServiceUser">
+    update xd_service_user
+    set synopsis = #{synopsis,jdbcType=VARCHAR},
+    	worktime = #{worktime,jdbcType=VARCHAR},
+    	qq = #{qq,jdbcType=VARCHAR},
+    	custom_phone = #{customPhone,jdbcType=VARCHAR}
+    where service_phone = #{servicePhone,jdbcType=VARCHAR}
+  </update>
+  <update id="updateForStatus" parameterType="com.dt.xd.xdServiceUser.XdServiceUser">
+    update xd_service_user
+    set status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

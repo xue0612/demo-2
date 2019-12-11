@@ -96,19 +96,19 @@ table th:nth-child(1) {
 }
 
 table td:nth-child(2) {
-    width: 43px;
+    width: 200px;
 }
 
 table td:nth-child(3) {
-    width: 585px;
+    width: 400px;
 }
 
 table td:nth-child(4) {
-    width: 86px;
+    width: 150px;
 }
 
 table td:nth-child(5) {
-    width: 86px;
+    width: 230px;
 }
 
 table td:nth-child(6) {
@@ -154,4 +154,53 @@ table td:nth-child(7) {
 .main-sercive{
     margin: 20px 0 0 30px;
     display: none;
+}
+
+
+
+
+
+
+
+ul.pagination {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	width: 50%;
+}
+
+ul.pagination li {
+	display: inline;
+}
+
+ul.pagination li a {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	transition: background-color .3s;
+	border: 1px solid #ddd;
+}
+
+ul.pagination li a.active {
+	background-color: #4CAF50;
+	color: white;
+	border: 1px solid #4CAF50; /*solid	定义实线*/
+}
+
+ul.pagination li a:hover:not (.active ) {
+	background-color: #ddd;
+}
+
+div.nowpage {
+	background-color: #aaaaaa;
+}
+
+div.center {
+	text-align: center;
+}
+.imagesyle {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
 }

@@ -14,22 +14,22 @@ $(function() {
 
 $(".login-btn").on("click", function(){
 	
-	var phone = $(".phone").val();
+	var servicePhone = $(".phone").val();
 	var imgcode = $(".code").val();
-	var password = $(".password").val();
-	var password1 = $(".password1").val();
+	var servicePassword = $(".password").val();
+	var servicePassword1 = $(".password1").val();
 	$.ajax({
 		// 请求类型
 		type:"post",
 		// 请求路径
-		url:"/repassword",
+		url:"/ser_repassword",
 		// 请求参数
 		data:{
 			
-			phone: phone,
-			password: password,
+			servicePhone: servicePhone,
+			servicePassword: servicePassword,
 			imgcode: imgcode,
-			password1: password1,
+			servicePassword1: servicePassword1,
 		},
 		// 返回数据类型
 		// 请求成功后调用函数

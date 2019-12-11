@@ -42,4 +42,8 @@ public interface XdProductMapper {
     int updateByPrimaryKeyWithBLOBs(XdProduct record);
 
     int updateByPrimaryKey(XdProduct record);
+    
+    int updateByStatus(XdProduct record);
+    
+    int updateForService(XdProduct user);
 }

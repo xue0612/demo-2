@@ -3,28 +3,38 @@ package com.dt.xd.dao.mapper;
 import com.dt.xd.xdBoughtUser.XdBoughtUser;
 import com.dt.xd.xdBoughtUser.XdBoughtUserExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface XdBoughtUserMapper {
-    long countByExample(XdBoughtUserExample example);
 
-    int deleteByExample(XdBoughtUserExample example);
+	int updateBy(String password1, String phone);
+	
+	int updateByExample();
 
-    int deleteByPrimaryKey(String id);
+	long countByExample();
+	
+	int getCount(@Param("userName") String userName);
+	
+	List<XdBoughtUser> selectByUserName(XdBoughtUserExample example);
 
-    int insert(XdBoughtUser record);
+	int deleteByExample(XdBoughtUserExample example);
 
-    int insertSelective(XdBoughtUser record);
+	int deleteByPrimaryKey(String id);
 
-    List<XdBoughtUser> selectByExample(XdBoughtUserExample example);
+	int insert(XdBoughtUser record);
 
-    XdBoughtUser selectByPrimaryKey(String id);
+	int insertSelective(XdBoughtUser record);
 
-    int updateByExampleSelective(@Param("record") XdBoughtUser record, @Param("example") XdBoughtUserExample example);
+	List<XdBoughtUser> selectByExample(XdBoughtUserExample example);
 
-    int updateByExample(@Param("record") XdBoughtUser record, @Param("example") XdBoughtUserExample example);
+	XdBoughtUser selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(XdBoughtUser record);
+	int updateByExampleSelective(@Param("record") XdBoughtUser record, @Param("example") XdBoughtUserExample example);
 
-    int updateByPrimaryKey(XdBoughtUser record);
+	int updateByPrimaryKeySelective(XdBoughtUser record);
+
+	int updateByPrimaryKey(XdBoughtUser record);
 }

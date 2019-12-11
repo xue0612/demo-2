@@ -1,3 +1,7 @@
+$(function(){
+	var name = sessionStorage.getItem("userName");
+	$(".username").text(name);
+})
 $(".search-product").on("click", function(){
     $(".search-product").addClass("font-aqua");
     $(".search-service").removeClass("font-aqua");
@@ -30,4 +34,9 @@ $(".save").on("click", function(event){
 $(".cancel").on("click", function(event){
     $(".masking").hide();
     console.log("取消");
+})
+
+$(".search-btn").on("click", function(event){
+    var id=$(".search input").val();
+    location.href="./e_evaluate?id="+id;
 })

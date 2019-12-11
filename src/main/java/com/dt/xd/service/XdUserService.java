@@ -6,25 +6,21 @@ import com.dt.xd.xdProduct.XdProduct;
 import com.dt.xd.xdUser.XdUser;
 
 public interface XdUserService {
-
-	public List<XdUser> ope_login(String phone);
+	//运营商的登录
+	public List<XdUser> login(String phone);
 	
-	List<XdUser> selectByPrimaryKey(String id);
+	//运营商的按照id查询
+	List<XdUser> selectBy(String id);
 	
-	public int ope_repassword(XdUser user);
+	//运营商的修改密码
+	public int repassword(XdUser user);
 
+	//运营商的注册
 	int insert(XdUser record);
 
-	List<XdProduct> selectByExample(int pageStart, int pageSize, String productName);
-
-	public long getCount();
-
-	int getCount(String productName);
-
-	List<XdProduct> selectByName(int pageStart, int pageSize, String productName);
+	//运营商上传头像
+	int updateForOpeImg(XdUser user);
 	
-	int updateImg(XdProduct xdProduct);
-	
-	XdProduct selectByPrimaryKey(Integer id);
-	
+	//按照主键查询id
+	XdUser selectByPrimaryKey(String id);
 }

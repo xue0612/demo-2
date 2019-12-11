@@ -16,17 +16,24 @@ $(".login-btn").on("click", function() {
 	var phone = $(".phone").val();
 	var password = $(".password").val();
 	var imgcode = $(".code").val();
+	var cmbProvince=$("#cmbProvince option:selected").val();
+	var cmbCity=$("#cmbCity option:selected").val();
+	var cmbArea=$("#cmbArea option:selected").val();
+	alert(cmbProvince);
 	$.ajax({
 		// 请求类型
 		type : "post",
 		// 请求路径
-		url : "/register",
+		url : "e_register",
 		// 请求参数
 		data : {
 			id : id,
 			phone : phone,
 			password : password,
 			imgcode : imgcode,
+			cmbProvince : cmbProvince,
+			cmbCity : cmbCity,
+			cmbArea : cmbArea,
 		},
 		// 返回数据类型
 		// 请求成功后调用函数

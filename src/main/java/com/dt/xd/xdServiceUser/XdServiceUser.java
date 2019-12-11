@@ -34,8 +34,58 @@ public class XdServiceUser {
     private String customPhone;
 
     private String license;
+    
+    private byte[] img;
+    
+    private String cmbProvince;
 
-    public String getId() {
+    private String cmbCity;
+    
+    private String cmbArea;
+    
+    private byte[] lic;
+
+    public byte[] getLic() {
+		return lic;
+	}
+
+	public void setLic(byte[] lic) {
+		this.lic = lic;
+	}
+
+	public String getCmbProvince() {
+		return cmbProvince;
+	}
+
+	public void setCmbProvince(String cmbProvince) {
+		this.cmbProvince = cmbProvince;
+	}
+
+	public String getCmbCity() {
+		return cmbCity;
+	}
+
+	public void setCmbCity(String cmbCity) {
+		this.cmbCity = cmbCity;
+	}
+
+	public String getCmbArea() {
+		return cmbArea;
+	}
+
+	public void setCmbArea(String cmbArea) {
+		this.cmbArea = cmbArea;
+	}
+
+	public byte[] getImg() {
+		return img;
+	}
+
+	public void setImg(byte[] img) {
+		this.img = img;
+	}
+
+	public String getId() {
         return id;
     }
 

@@ -7,6 +7,24 @@
     <result column="pro_id" jdbcType="INTEGER" property="proId" />
     <result column="buy_id" jdbcType="VARCHAR" property="buyId" />
   </resultMap>
+  <resultMap id="BaseResultMap1" type="com.dt.xd.xdShopping.XdShow">
+    <id column="id1" jdbcType="VARCHAR" property="id" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="pro_id" jdbcType="INTEGER" property="proId" />
+    <result column="buy_id" jdbcType="VARCHAR" property="buyId" />
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="service_product" jdbcType="VARCHAR" property="serviceProduct" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_instruction" jdbcType="VARCHAR" property="productInstruction" />
+    <result column="product_price" jdbcType="REAL" property="productPrice" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="ts" jdbcType="TIMESTAMP" property="ts" />
+    <result column="sales_volume" jdbcType="INTEGER" property="salesVolume" />
+    <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
+    <result column="recommend" jdbcType="VARCHAR" property="recommend" />
+    <result column="high_quality" jdbcType="VARCHAR" property="highQuality" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -69,6 +87,22 @@
     id, count, pro_id, buy_id
   </sql>
   
+  <!-- 
+  <select id="selectByOther" resultMap="BaseResultMap">
+  	select * 
+  	from xd_shopping,xd_product
+  	where xd_shopping.id=xd_product.id
+  </select>
+   -->
+ 
+ 
+  <select id="selectBoth" parameterType="java.lang.String" resultMap="BaseResultMap1">
+  	select * from xd_shopping,xd_product where xd_shopping.pro_id = xd_product.id
+  		 <!-- 将按照id查询改为按照产品名称查询 -->
+  		<if test="id!=null  and  id!=''">
+  		 and xd_product.product_name LIKE CONCAT('%','${id}','%')
+  		</if>
+  </select>
   
    <select id="getCount" parameterType="map" resultType="java.lang.Integer">
     select count(*) from xd_shopping  
@@ -83,6 +117,22 @@
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
+  </select>
+  
+  <select  id="selectTwoTable" parameterType="com.dt.xd.xdShopping.XdShoppingExample" resultMap="BaseResultMap1">
+  	select * from xd_shopping,xd_product where xd_shopping.pro_id = xd_product.id
+  		<if test="_parameter!=null">
+  			<include refid="Example_Where_Clause"></include>
+  		</if>
+  		<if test="id!=null  and  id!=''">
+  			 and xd_product.product_name LIKE CONCAT('%','${id}','%')
+  		</if>
+  		<if test="pageStart>=0">
+  		  limit ${pageStart},${pageSize}
+  		</if> 
+  		<if test="orderByClause!=null">
+  			order by ${orderByClause}
+  		</if>
   </select>
   
   <select  id="selectById" parameterType="com.dt.xd.xdShopping.XdShoppingExample" resultMap="BaseResultMap">
@@ -226,6 +276,9 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateById" parameterType="java.lang.String">
+    update xd_shopping set count = ${count} where id = ${id}
   </update>
   <update id="updateByExample" parameterType="map">
     update xd_shopping

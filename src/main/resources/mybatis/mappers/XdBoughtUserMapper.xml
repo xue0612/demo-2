@@ -13,6 +13,7 @@
     <result column="bought_num" jdbcType="INTEGER" property="boughtNum" />
     <result column="total" jdbcType="REAL" property="total" />
     <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,8 +74,62 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_name, head_img, sex, phone, area, ts, email, bought_num, total, status
+    id, user_name, head_img, sex, phone, area, ts, email, bought_num, total, status, 
+    password
   </sql>
+  
+  
+  <select id="getCount" parameterType="map" resultType="java.lang.Integer">
+    select count(*) from xd_bought_user  
+    <if test="userName!=null and userName!=''">
+    	where user_name like concat('%','${userName}','%')  
+    </if>     
+  </select>
+  
+  <select  id="selectByUserName" parameterType="com.dt.xd.xdBoughtUser.XdBoughtUserExample" resultMap="BaseResultMap">
+  	select 
+  		<if test="distinct">
+  		     distinct
+  		</if>
+  		<include refid="Base_Column_List"></include>
+  		 from xd_bought_user 
+  		<if test="_parameter!=null">
+  			<include refid="Example_Where_Clause"></include>
+  		</if>
+  		<if test="userName!=null  and  userName!=''">
+  			 where user_name like '%${userName}%'
+  		</if>
+  		<if test="pageStart>=0">
+  		  limit ${pageStart},${pageSize}
+  		</if> 
+  		<if test="orderByClause!=null">
+  			order by ${orderByClause}
+  		</if>
+  </select>
+  
+  
+  <update id="updateBy" parameterType="java.lang.String">
+    update xd_bought_user
+    set 
+     
+      password = #{password1} where phone=#{phone}
+     
+    
+  </update>
+  
+  
+   <update id="updateByExample" parameterType="map">
+	  update xd_bought_user
+      set 
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=CHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update> 
+  
+  
   <select id="selectByExample" parameterType="com.dt.xd.xdBoughtUser.XdBoughtUserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -109,11 +164,11 @@
     insert into xd_bought_user (id, user_name, head_img, 
       sex, phone, area, ts, 
       email, bought_num, total, 
-      status)
+      status, password,cmbProvince,cmbCity,cmbArea)
     values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{headImg,jdbcType=VARCHAR}, 
       #{sex,jdbcType=CHAR}, #{phone,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{ts,jdbcType=TIMESTAMP}, 
       #{email,jdbcType=VARCHAR}, #{boughtNum,jdbcType=INTEGER}, #{total,jdbcType=REAL}, 
-      #{status,jdbcType=VARCHAR})
+      #{status,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},#{cmbProvince,jdbcType=VARCHAR},#{cmbCity,jdbcType=VARCHAR},#{cmbArea,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dt.xd.xdBoughtUser.XdBoughtUser">
     insert into xd_bought_user
@@ -151,6 +206,9 @@
       <if test="status != null">
         status,
       </if>
+      <if test="password != null">
+        password,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -185,6 +243,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -230,11 +291,15 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=VARCHAR},
       </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <!-- 
   <update id="updateByExample" parameterType="map">
     update xd_bought_user
     set id = #{record.id,jdbcType=VARCHAR},
@@ -247,11 +312,14 @@
       email = #{record.email,jdbcType=VARCHAR},
       bought_num = #{record.boughtNum,jdbcType=INTEGER},
       total = #{record.total,jdbcType=REAL},
-      status = #{record.status,jdbcType=VARCHAR}
+      status = #{record.status,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
-  </update>
+  </update> 
+   -->
+   
   <update id="updateByPrimaryKeySelective" parameterType="com.dt.xd.xdBoughtUser.XdBoughtUser">
     update xd_bought_user
     <set>
@@ -285,6 +353,9 @@
       <if test="status != null">
         status = #{status,jdbcType=VARCHAR},
       </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -299,7 +370,8 @@
       email = #{email,jdbcType=VARCHAR},
       bought_num = #{boughtNum,jdbcType=INTEGER},
       total = #{total,jdbcType=REAL},
-      status = #{status,jdbcType=VARCHAR}
+      status = #{status,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

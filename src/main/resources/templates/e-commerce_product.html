@@ -21,14 +21,14 @@
 	
     <div class="headder-top">
         <div class="width1200 headder-top-content">
-            <div><span>{用户名}</span>欢饮来到信达！<span class="user-quit">[退出]</span></div>
+            <div><span class="username"></span> 欢迎来到信达！<a href="e-commerce_login.html">[退出]</a></div>
             <ul>
-                <li><a href="/e_shoppingcar"><i class="fa fa-shopping-cart fa-lg"></i>
-                        购物车<span>1</span>件</a></li>
-                <li> <a href="e-commerce_order.html">
+                <li><a href="./e_shoppingcar"><i class="fa fa-shopping-cart fa-lg"></i>
+                        购物车<span class="shopnum"></span>件</a></li>
+                <li> <a href="./e_order">
                         <i class="fa fa-file-text-o fa-lg"></i> 我的订单
                     </a></li>
-                <li>服务商入口</li>
+                <li><a href="./ser_product">服务商入口</a></li>
             </ul>
         </div>
     </div>
@@ -50,12 +50,7 @@
         <img class="tel" src="./images/xinda-tel.png" alt="">
     </div>
     <ul class="banner width1200">
-        <li><a href="e-commerce_product.html" class="border-b">全部产品</a></li>
-        <li><a href="#">财税服务</a></li>
-        <li><a href="#">公司工商</a></li>
-        <li><a href="#">人事外包</a></li>
-        <li><a href="#">加盟我们</a></li>
-        <li><a href="#">店铺</a></li>
+        <li><a href="/e_product" class="border-b">全部产品</a></li>
     </ul>
     <div class="line-aqua"></div>
     <div class="content width1200"  th:if="${count} gt  '0'">
@@ -69,13 +64,13 @@
         </ul>
         <hr color="#ededed" size="1">
         <div class="article"  th:each="user:${xdProductList}">
-            <img th:src="@{'/headImg?id='+${user.id}}" alt="图片" /> 
-            <!-- 
-	           <form action="/upfile?id=8" method="post" enctype="multipart/form-data">
+            <img th:src="@{'./headImg?id='+${user.id}}" alt="图片" /> 
+              <!--  
+	           <form action="/upfile?id=1" method="post" enctype="multipart/form-data">
 					<input type="file" name="file">
 					<input type="submit" value="提交">
 				</form>
-			 -->
+			  -->
             <ul class="article-info"   >
                 <li th:text="${user.productName}" ></li>
                 <li th:text="${user.productInstruction}"></li>
@@ -106,17 +101,58 @@
 		lastPage=${count}-${pageSize}">
 	
 		<ul class="pagination">
-		
-			<li><a th:href="@{'/fenyelike?pageStart=' + 0+'&productName='+${productName}}">首页</a></li>
+			<!--
+			<script type="text/javascript"> 
+			function goToClient(pageStart,productName){ 
+			window.location.href="e_product?pageStart=" + ${pagePre} + "&productName=" + ${productName}; 
+													} 
+			</script> 
+			<li><a href="#" οnclick="javascript:goToClient('u','p');">首页</a></li> 
+			<script type="text/javascript"> 
+			function goToClient(pageStart,productName){ 
+			window.location.href="e_product?pageStart=" + ${pagePre} + "&productName=" + ${productName}; 
+													} 
+			</script> 
+			<li><span th:if="${pagePre} ge '0'"><a 
+				href="#" οnclick="javascript:goToClient('u','p');">«</a></span></li> 
+			-->
+			<li><a th:href="@{'./e_product?pageStart=' + 0+'&productName='+${productName}}">首页</a></li>
 			<li><span th:if="${pagePre} ge '0'"><a
-					th:href="@{'/fenyelike?pageStart=' + ${pagePre}+'&productName='+${productName}}">«</a></span></li>
+					th:href="@{'./e_product?pageStart=' + ${pagePre}+'&productName='+${productName}}">«</a></span></li>
+			
 			<li><div id="mydiv"></div></li>
+			<!-- 
+			<script type="text/javascript"> 
+			function goToClient(pageStart,productName){ 
+			window.location.href="e_product?pageStart=" + ${pageNext} + "&productName=" + ${productName}; 
+													} 
+			</script> 
+			<li><span th:if="${pageNext} lt ${count}"><a 
+				href="#" οnclick="javascript:goToClient('u','p');">»</a></span></li> 
+				
+			<script type="text/javascript"> 
+			function goToClient(pageStart,productName){ 
+			window.location.href="e_product?pageStart=" + ${lastPage} + "&productName=" + ${productName}; 
+													} 
+			</script> 
+			<li><span th:if="${modPage} eq  '0'"><a 
+				href="#" οnclick="javascript:goToClient('u','p');">末页</a></span></li> 
+				
+			<script type="text/javascript"> 
+			function goToClient(pageStart,productName){ 
+			window.location.href="e_product?pageStart=" + ${pageLast} + "&productName=" + ${productName}; 
+													} 
+			</script> 
+			<li><span th:unless="${modPage} eq  '0'"><a 
+				href="#" οnclick="javascript:goToClient('u','p');">末页</a></span></li> 
+			--> 
 			<li><span th:if="${pageNext} lt ${count}"><a
-					th:href="@{'/fenyelike?pageStart=' + ${pageNext}+'&productName='+${productName}}">»</a></span></li>
+					th:href="@{'./e_product?pageStart=' + ${pageNext}+'&productName='+${productName}}">»</a></span></li>
+			 
 			<li><span th:if="${modPage} eq  '0'"><a
-					th:href="@{'/fenyelike?pageStart=' + ${lastPage}+'&productName='+${productName}}">末页</a></span></li>
+					th:href="@{'./e_product?pageStart=' + ${lastPage}+'&productName='+${productName}}">末页</a></span></li>
 			<li><span th:unless="${modPage} eq  '0'"><a
-					th:href="@{'/fenyelike?pageStart=' + ${pageLast}+'&productName='+${productName}}">末页</a></span></li>
+					th:href="@{'./e_product?pageStart=' + ${pageLast}+'&productName='+${productName}}">末页</a></span></li>
 		</ul>
 	</div>
     <script src="./js/e-commerce_product.js"></script>

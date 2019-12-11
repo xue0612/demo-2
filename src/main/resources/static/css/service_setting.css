@@ -24,8 +24,8 @@
 }
 
 .avatars img {
-    width: 60px;
-    height: 60px;
+    width: 150px;
+    height: 150px;
     display: inline-block;
     border: 1px solid #e1e1e1;
 }
@@ -135,4 +135,10 @@
     border: none;
     cursor: pointer;
     margin-top: 10px;
+}
+
+.imagesyle {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
 }

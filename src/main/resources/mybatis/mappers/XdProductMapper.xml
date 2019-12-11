@@ -420,19 +420,27 @@
       img = #{img,jdbcType=LONGVARBINARY}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.dt.xd.xdProduct.XdProduct">
     update xd_product
-    set service_product = #{serviceProduct,jdbcType=VARCHAR},
-      product_name = #{productName,jdbcType=VARCHAR},
-      product_instruction = #{productInstruction,jdbcType=VARCHAR},
-      product_price = #{productPrice,jdbcType=REAL},
-      status = #{status,jdbcType=VARCHAR},
-      ts = #{ts,jdbcType=TIMESTAMP},
-      sales_volume = #{salesVolume,jdbcType=INTEGER},
-      service_name = #{serviceName,jdbcType=VARCHAR},
-      recommend = #{recommend,jdbcType=VARCHAR},
-      high_quality = #{highQuality,jdbcType=VARCHAR},
-      username = #{username,jdbcType=VARCHAR}
+    set img = #{img,jdbcType=LONGVARBINARY}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <update id="updateByStatus" parameterType="com.dt.xd.xdProduct.XdProduct">
+    update xd_product
+    set status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateForService" parameterType="com.dt.xd.xdProduct.XdProduct">
+    update xd_product
+    set
+    product_name = #{productName,jdbcType=VARCHAR},
+    product_instruction = #{productInstruction,jdbcType=VARCHAR},
+    product_price = #{productPrice,jdbcType=REAL}
+   <!--  img = #{img,jdbcType=BLOB},
+  -->   where id = #{id,jdbcType=INTEGER}
+  </update>
+  
 </mapper>

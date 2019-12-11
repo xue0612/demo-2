@@ -19,7 +19,7 @@ $(".login-btn").on("click", function() {
 		// 请求类型
 		type : "post",
 		// 请求路径
-		url : "/login",
+		url : "e_login",
 		// 请求参数
 		data : {
 			phone : phone,
@@ -28,10 +28,14 @@ $(".login-btn").on("click", function() {
 		},
 		// 返回数据类型
 		// 请求成功后调用函数
+		
 		success : function(data) {
+			
 			console.log("成功后返回数据", data);
 			if (data.code == 1) {
-				location.href = "/fenyelike"
+				location.href = "./e_product"
+					sessionStorage.setItem("phone",phone);
+					sessionStorage.setItem("userName",data.userName);
 			} else {
 				alert("信息输入错误!");
 				location.href = "e-commerce_login.html"
@@ -43,3 +47,4 @@ $(".login-btn").on("click", function() {
 		}
 	})
 })
+
